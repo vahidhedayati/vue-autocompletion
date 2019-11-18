@@ -19,7 +19,7 @@ npm i @vahidh/vue-autocompletion --save
 ## Second
 Require in your project:
 ```
-var VueDropdown = require('vue-autocompletion');
+var VueAutocompletion = require('vue-autocompletion');
 ```
 or ES6 syntax:
 ```js
