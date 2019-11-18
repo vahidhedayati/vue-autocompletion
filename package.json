@@ -1,0 +1,26 @@
+{
+  "name": "@vahidh/vue-autocompletion",
+  "version": "1.0.0",
+  "description": "AutoComplete for Vue.js complete collection / building of  dynamic data sets",
+  "main": "webpack.config.js",
+  "dependencies": {
+    "vue": "^2.5.0"
+  },
+  "devDependencies": {
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^3.1.11"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vahid Hedayati <badvad@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vahidhedayati/vue-autocompletion.git"
+  },
+  "homepage": "https://github.com/vahidhedayati/vue-autocompletion",
+  "bugs": {
+    "url": "https://github.com/vahidhedayati/vue-autocompletion/issues"
+  }
+}
