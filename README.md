@@ -3,9 +3,19 @@
 ## Installation via NPM
 # Usage:
 
-## First
-Install via NPM ```npm i vue-autocompletion```
 
+[![npm (scoped)](https://img.shields.io/npm/v/@vahidh/vue-autocompletion.svg?style=flat-square)](https://www.npmjs.com/package/@vahidh/vue-autocompletion)
+[![npm](https://img.shields.io/npm/dm/@vahidh/vue-autocompletion.svg?style=flat-square)](https://www.npmjs.com/package/@vahidh/vue-autocompletion)
+[![MIT](https://img.shields.io/github/license/vahidhedayati/vue-autocompletion.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+## First
+Install via NPM 
+```
+npm i @vahidh/vue-autocompletion --save-dev
+```
+or
+```
+npm i @vahidh/vue-autocompletion --save
+```
 ## Second
 Require in your project:
 ```
