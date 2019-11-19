@@ -221,12 +221,12 @@ export default {
 - Initial release
 
 
-##Credits
+## Credits
 ### [Filipa Lacerda](https://alligator.io/vuejs/vue-autocomplete-component/)
 This code orginated from this posting, I tried to find github source of this, but then found it reused everywhere.
 I had a look at some of the existing auto complete plugins and at the time building from scratch felt most suited to 
 dynamics of it's requirements.
-Original did most bust needed additional logic to make it work even more dynamically extensively.
+Original did most but needed additional logic to make it work even more dynamically extensively.
 One of the main issues I found when testing existing auto completes was when an invalid entry is entered the entry 
 persists on input area and there are 2 specific setTimeouts within the js file to try capture real outcome after a 
 race condition.
