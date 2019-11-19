@@ -1,6 +1,6 @@
 {
   "name": "@vahidh/vue-autocompletion",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AutoComplete for Vue.js complete collection / building of  dynamic data sets",
   "main": "webpack.config.js",
   "dependencies": {
