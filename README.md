@@ -62,9 +62,9 @@ isAsync| Boolean | false | unused feature came with original guide
 Event | Description
 --- | ---
 @key-press | Fired when the input text changes 
-@search-value| Not requied but if set allows you to manipulate locally from set selected value field
-@search-key| Not requied but if set allows you to manipulate locally from set selected key field
-@return-promise| Not requied but if set won't manipulate parent object instead return the full object from remote selection back to you, this contains the entire object selected. It may have many other values you need to update page with.
+@search-value| if `v-model` directive declared then not required but if set allows you to manipulate locally from set selected value field
+@search-key| if `v-model` directive declared then not required  but if set allows you to manipulate locally from set selected key field
+@return-promise| Not required but if set won't manipulate parent object instead return the full object from remote selection back to you, this contains the entire object selected. It may have many other values you need to update page with.
 
 ## Usage
 
