@@ -63,7 +63,7 @@
         default: false
       },
       validationErrors: { type:Array,
-        default: function () { return [] }
+        default: []
       },
       placeholder:{
         type: String,
@@ -89,35 +89,35 @@
       items: {
         type: Array,
         required: false,
-        default: () => [],
+        default: []
       },
       isAsync: {
         type: Boolean,
         required: false,
-        default: false,
-      },
+        default: false
+      }
     },
     computed: {
-      primaryValue() {
+      primaryValue:function() {
         if (this.remotePrimaryValue) {
           return this.remotePrimaryValue
         } else {
           return (this.remoteValue ? this.remoteValue : this.valueField)
         }
       },
-      currentValue() {
+      currentValue:function() {
         return (this.remoteValue ? this.remoteValue : this.valueField)
       },
-      currentKey() {
+      currentKey:function() {
         return (this.remoteKey ? this.remoteKey : this.keyField)
       },
-      errorClazz() {
+      errorClazz:function() {
         return ((this.errors.has(this.name)|| this.validationErrors.includes(this.name)) ? 'is-invalid' : '')
       }
 
     },
 
-    data() {
+    data:function() {
       return {
         isOpen: false,
         results: [],
@@ -133,7 +133,7 @@
       };
     },
     methods: {
-      onChange() {
+      onChange:function() {
         this.searchChanged=true
         if (this.currentSelected[this.valueField]!='' || this.currentSelected[this.keyField]!=''){
           var aa = this.selected
@@ -153,8 +153,9 @@
           }
         }
       },
-      filterResults() {
-        this.results = this.items.filter((item) => {
+      filterResults:function() {
+        this.results =
+                this.items.filter(function(item) {
           if (this.remotePrimaryValue && item.hasOwnProperty(this.remotePrimaryValue)){
             return item[this.remotePrimaryValue].toLowerCase().indexOf(this.search.toLowerCase()) > -1;
           } else {
@@ -163,7 +164,7 @@
 
         });
       },
-      setResult(result) {
+      setResult:function(result) {
         this.resultSet=true
         if (this.returnPromise) {
           this.$emit('return-promise', result)
@@ -214,14 +215,14 @@
         }
 
       },
-      confirmFocus(evt) {
+      confirmFocus:function(evt) {
         this.resultSet=false
       },
       /*
       * race condition - need to ensure user selected auto complete
       * appears to work and is triggered when open auto complete closes so as expected
       */
-      confirmBlur(evt) {
+      confirmBlur:function(evt) {
         setTimeout(function () {
           if (this.found!=this.search && this.searchChanged) {
             this.search=''
@@ -230,8 +231,8 @@
         }.bind(this), 180)
       },
 
-      confirmValue(evt) {
-        const processSearch=true
+      confirmValue:function(evt) {
+        var processSearch=true
         setTimeout(function () {
           if (!this.resultSet) {
             for (var i = 0; i <  this.results.length; i++) {
@@ -258,7 +259,7 @@
         }.bind(this), 180)
       },
 
-      onTab(evt) {
+      onTab:function(evt) {
         if (this.isOpen) {
           if (this.results.length > 0) {
             var ix = 0;
@@ -275,22 +276,22 @@
       isFull: function() {
         return this.found.length>0
       },
-      onArrowDown(evt) {
+      onArrowDown: function(evt) {
         if (this.arrowCounter < this.results.length) {
           this.arrowCounter = this.arrowCounter + 1;
         }
       },
-      onArrowUp() {
+      onArrowUp: function() {
         if (this.arrowCounter > 0) {
           this.arrowCounter = this.arrowCounter -1;
         }
       },
-      onEnter() {
+      onEnter: function() {
         this.setResult(this.results[this.arrowCounter]);
         this.isOpen = false;
         this.arrowCounter = -1;
       },
-      handleClickOutside(evt) {
+      handleClickOutside: function(evt) {
         if (!this.$el.contains(evt.target)) {
           this.isOpen = false;
           this.arrowCounter = -1;
@@ -312,7 +313,7 @@
         }
       }
     },
-    created () {
+    created: function () {
       this.currentSelected=this.selected
       if (this.selected && this.selected[this.valueField] && this.selected[this.keyField] ) {
         this.search=this.selected[this.valueField]
@@ -320,7 +321,7 @@
         this.lastSearch= this.search;
       }
     },
-    mounted() {
+    mounted: function() {
       document.addEventListener('click', this.handleClickOutside)
       if (this.selected && this.selected[this.valueField] && this.selected[this.keyField]) {
         this.search=this.selected[this.valueField]
@@ -328,7 +329,7 @@
         this.lastSearch= this.search;
       }
     },
-    destroyed() {
+    destroyed: function() {
       document.removeEventListener('click', this.handleClickOutside)
     }
   };
