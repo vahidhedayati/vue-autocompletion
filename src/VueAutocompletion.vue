@@ -63,7 +63,7 @@
         default: false
       },
       validationErrors: { type:Array,
-        default: []
+        default: function () { return [] }
       },
       placeholder:{
         type: String,
@@ -89,35 +89,35 @@
       items: {
         type: Array,
         required: false,
-        default: []
+        default: () => [],
       },
       isAsync: {
         type: Boolean,
         required: false,
-        default: false
-      }
+        default: false,
+      },
     },
     computed: {
-      primaryValue:function() {
+      primaryValue() {
         if (this.remotePrimaryValue) {
           return this.remotePrimaryValue
         } else {
           return (this.remoteValue ? this.remoteValue : this.valueField)
         }
       },
-      currentValue:function() {
+      currentValue() {
         return (this.remoteValue ? this.remoteValue : this.valueField)
       },
-      currentKey:function() {
+      currentKey() {
         return (this.remoteKey ? this.remoteKey : this.keyField)
       },
-      errorClazz:function() {
+      errorClazz() {
         return ((this.errors.has(this.name)|| this.validationErrors.includes(this.name)) ? 'is-invalid' : '')
       }
 
     },
 
-    data:function() {
+    data() {
       return {
         isOpen: false,
         results: [],
@@ -133,7 +133,7 @@
       };
     },
     methods: {
-      onChange:function() {
+      onChange() {
         this.searchChanged=true
         if (this.currentSelected[this.valueField]!='' || this.currentSelected[this.keyField]!=''){
           var aa = this.selected
@@ -153,9 +153,8 @@
           }
         }
       },
-      filterResults:function() {
-        this.results =
-                this.items.filter(function(item) {
+      filterResults() {
+        this.results = this.items.filter((item) => {
           if (this.remotePrimaryValue && item.hasOwnProperty(this.remotePrimaryValue)){
             return item[this.remotePrimaryValue].toLowerCase().indexOf(this.search.toLowerCase()) > -1;
           } else {
@@ -164,7 +163,7 @@
 
         });
       },
-      setResult:function(result) {
+      setResult(result) {
         this.resultSet=true
         if (this.returnPromise) {
           this.$emit('return-promise', result)
@@ -215,14 +214,14 @@
         }
 
       },
-      confirmFocus:function(evt) {
+      confirmFocus(evt) {
         this.resultSet=false
       },
       /*
       * race condition - need to ensure user selected auto complete
       * appears to work and is triggered when open auto complete closes so as expected
       */
-      confirmBlur:function(evt) {
+      confirmBlur(evt) {
         setTimeout(function () {
           if (this.found!=this.search && this.searchChanged) {
             this.search=''
@@ -231,8 +230,7 @@
         }.bind(this), 180)
       },
 
-      confirmValue:function(evt) {
-        var processSearch=true
+      confirmValue(evt) {
         setTimeout(function () {
           if (!this.resultSet) {
             for (var i = 0; i <  this.results.length; i++) {
@@ -259,7 +257,7 @@
         }.bind(this), 180)
       },
 
-      onTab:function(evt) {
+      onTab(evt) {
         if (this.isOpen) {
           if (this.results.length > 0) {
             var ix = 0;
@@ -276,22 +274,22 @@
       isFull: function() {
         return this.found.length>0
       },
-      onArrowDown: function(evt) {
+      onArrowDown(evt) {
         if (this.arrowCounter < this.results.length) {
           this.arrowCounter = this.arrowCounter + 1;
         }
       },
-      onArrowUp: function() {
+      onArrowUp() {
         if (this.arrowCounter > 0) {
           this.arrowCounter = this.arrowCounter -1;
         }
       },
-      onEnter: function() {
+      onEnter() {
         this.setResult(this.results[this.arrowCounter]);
         this.isOpen = false;
         this.arrowCounter = -1;
       },
-      handleClickOutside: function(evt) {
+      handleClickOutside(evt) {
         if (!this.$el.contains(evt.target)) {
           this.isOpen = false;
           this.arrowCounter = -1;
@@ -313,7 +311,7 @@
         }
       }
     },
-    created: function () {
+    created () {
       this.currentSelected=this.selected
       if (this.selected && this.selected[this.valueField] && this.selected[this.keyField] ) {
         this.search=this.selected[this.valueField]
@@ -321,7 +319,7 @@
         this.lastSearch= this.search;
       }
     },
-    mounted: function() {
+    mounted() {
       document.addEventListener('click', this.handleClickOutside)
       if (this.selected && this.selected[this.valueField] && this.selected[this.keyField]) {
         this.search=this.selected[this.valueField]
@@ -329,7 +327,7 @@
         this.lastSearch= this.search;
       }
     },
-    destroyed: function() {
+    destroyed() {
       document.removeEventListener('click', this.handleClickOutside)
     }
   };
