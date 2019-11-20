@@ -9,11 +9,11 @@
 ## First
 Install via NPM 
 ```
-npm i @vahidh/vue-autocompletion --save-dev
+npm i vue-autocompletion --save-dev
 ```
 or
 ```
-npm i @vahidh/vue-autocompletion --save
+npm i  vue-autocompletion --save
 ```
 ## Second
 Require in your project:
