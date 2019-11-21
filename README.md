@@ -1,6 +1,6 @@
 # Vue Autocompletion
-[![npm (scoped)](https://img.shields.io/npm/v/@vahidh/vue-autocompletion.svg?style=flat-square)](https://www.npmjs.com/package/@vahidh/vue-autocompletion)
-[![npm](https://img.shields.io/npm/dm/@vahidh/vue-autocompletion.svg?style=flat-square)](https://www.npmjs.com/package/@vahidh/vue-autocompletion)
+[![npm (scoped)](https://img.shields.io/npm/v/vue-autocompletion.svg?style=flat-square)](https://www.npmjs.com/package/vue-autocompletion)
+[![npm](https://img.shields.io/npm/dm/vue-autocompletion.svg?style=flat-square)](https://www.npmjs.com/package/vue-autocompletion)
 [![MIT](https://img.shields.io/github/license/vahidhedayati/vue-autocompletion.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 ## Installation via NPM
