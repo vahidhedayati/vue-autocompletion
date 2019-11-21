@@ -3,7 +3,6 @@
 [![npm](https://img.shields.io/npm/dm/@vahidh/vue-autocompletion.svg?style=flat-square)](https://www.npmjs.com/package/@vahidh/vue-autocompletion)
 [![MIT](https://img.shields.io/github/license/vahidhedayati/vue-autocompletion.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-
 ## Installation via NPM
 
 ## First
@@ -47,9 +46,7 @@ remotePrimaryValue| String | - | if defined it will look for this as highest cho
 remoteValueSelect| String | - | the actual value to select if remoteValue is shown as selectable item {what appears after selection} is also set as expected object value 
 clazz| String | - | css classes to load if additional css styling needed
 returnPromise| Boolean | false | return entire object - this is for more complex objects that have many other things you need to do with returned data
-validationErrors| Array | [] | returns any vee-validate validation issues back to caller 
 placeholder| String | name | the value that is set for a blank auto complete box
-validation| String | - | the validation types required i.e. 'required|xx'
 selected| Object | {} | The actual selected object when user chooses one of drop down - emited back to parent call overwriting parent key/value fields
 name| String | - |The name of select field must match object name that is being saved for validation to work or valueField name
 searchLength|Number| 3| Amount of characters before triggering dropdown
@@ -67,6 +64,9 @@ Event | Description
 @return-promise| Not required but if set won't manipulate parent object instead return the full object from remote selection back to you, this contains the entire object selected. It may have many other values you need to update page with.
 
 ## Usage
+
+##### [Working Demo project (needs to be downloaded run)](https://github.com/vahidhedayati/vue-autocompletion-test)
+
 
 ### Example 1: Basic 
 Where the remote key / value pair match the object locally to be set. 
