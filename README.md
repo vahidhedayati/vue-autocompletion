@@ -446,6 +446,8 @@ export default {
 
 
 ## Changelog
+#### v.1.1.10
+- Offical release has no validation capacity 
 #### v.1.0.9
 -  list scrolling added when using tabs and keys to go down list
 

@@ -278,19 +278,19 @@
       isFull: function() {
         return this.found.length>0
       },
-      onArrowDown(evt) {
+      onArrowDown:function (evt) {
         if (this.arrowCounter < this.results.length-1) {
           this.arrowCounter = this.arrowCounter + 1;
           this.fixScrolling();
         }
       },
-      onArrowUp() {
+      onArrowUp:function () {
         if (this.arrowCounter > 0) {
           this.arrowCounter = this.arrowCounter - 1;
           this.fixScrolling()
         }
       },
-      fixScrolling(){
+      fixScrolling:function (){
         const liH = this.$refs.options[this.arrowCounter].clientHeight;
         this.$refs.autocompleteResults.scrollTop = liH * this.arrowCounter;
       },
