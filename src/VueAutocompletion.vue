@@ -1,12 +1,12 @@
 <template>
   <span class="autocomplete ">
-    <input type="search" :name="name" @input="onChange" v-validate="validation" :autocomplete="name"
+    <input type="search" :name="name" @input="onChange"  :autocomplete="name"
            v-model="search" :placeholder="placeholder" @keydown.down="onArrowDown" @change="confirmValue(search)"
            @keydown.tab="onTab" @keydown.up="onArrowUp" @keydown.enter="onEnter" @blur="confirmBlur" @focus="confirmFocus"
            class="form-control"
            :class="[clazz,errorClazz]"
     />
-    <div v-show="errors.has(name)" class="col-sm-12 alert alert-danger">{{ errors.first(name)}}</div>
+
     <ul id="autocomplete-results" v-show="isOpen" class="autocomplete-results  form-control">
       <li class="loading" v-if="isLoading">
         Loading results...
@@ -21,13 +21,13 @@
         </div>
       </li>
     </ul>
-    <input type="hidden" v-validate="validation && validation.toString().includes('required') ? 'required' : ''"  name="hiddenId" v-model="hiddenId"/>
+    <input type="hidden"   name="hiddenId" v-model="hiddenId"/>
   </span>
 </template>
 <script>
   export default {
     name: 'vue-autocompletion',
-    inject: ["$validator"],
+
     props: {
       keyField: {
         type: String,
@@ -46,7 +46,7 @@
         default: ''
       },
       remotePrimaryValue: {
-        type: String,
+
         default:'',
       },
       remoteValueSelect: {
@@ -63,19 +63,17 @@
         default: false
       },
       validationErrors: { type:Array,
-        default: function () { return [] }
+        default: function() { return []}
       },
       placeholder:{
         type: String,
         default: 'name'
       },
-      validation: {
-        type: String,
-        default:""
-      },
+
       selected: {
         type: Object,
-        default: {}
+        required: true,
+        default:  function() { return {}}
       },
       name: {
         type: String,
@@ -89,35 +87,35 @@
       items: {
         type: Array,
         required: false,
-        default: () => [],
+        default:  function() { return []}
       },
       isAsync: {
         type: Boolean,
         required: false,
-        default: false,
-      },
+        default: false
+      }
     },
     computed: {
-      primaryValue() {
+      primaryValue:function() {
         if (this.remotePrimaryValue) {
           return this.remotePrimaryValue
         } else {
           return (this.remoteValue ? this.remoteValue : this.valueField)
         }
       },
-      currentValue() {
+      currentValue:function() {
         return (this.remoteValue ? this.remoteValue : this.valueField)
       },
-      currentKey() {
+      currentKey:function() {
         return (this.remoteKey ? this.remoteKey : this.keyField)
       },
-      errorClazz() {
-        return ((this.errors.has(this.name)|| this.validationErrors.includes(this.name)) ? 'is-invalid' : '')
+      errorClazz:function() {
+        return (this.validationErrors.includes(this.name)) ? 'is-invalid' : ''
       }
 
     },
 
-    data() {
+    data:function() {
       return {
         isOpen: false,
         results: [],
@@ -133,7 +131,7 @@
       };
     },
     methods: {
-      onChange() {
+      onChange:function() {
         this.searchChanged=true
         if (this.currentSelected[this.valueField]!='' || this.currentSelected[this.keyField]!=''){
           var aa = this.selected
@@ -153,17 +151,21 @@
           }
         }
       },
-      filterResults() {
-        this.results = this.items.filter((item) => {
-          if (this.remotePrimaryValue && item.hasOwnProperty(this.remotePrimaryValue)){
-            return item[this.remotePrimaryValue].toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-          } else {
-            return item[this.currentValue].toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-          }
+      filterResults:function() {
+        var rpv = this.remotePrimaryValue
+        var sch=this.search
+        var cv=this.currentValue
+        this.results =
+                this.items.filter(function(item) {
+                  if (item && rpv!=undefined && item.hasOwnProperty(rpv)){
+                    return item[rpv].toLowerCase().indexOf(sch.toLowerCase()) > -1;
+                  } else {
+                    return item[cv] && sch && item[cv].toLowerCase().indexOf(sch.toLowerCase()) > -1;
+                  }
 
-        });
+                });
       },
-      setResult(result) {
+      setResult:function(result) {
         this.resultSet=true
         if (this.returnPromise) {
           this.$emit('return-promise', result)
@@ -214,14 +216,14 @@
         }
 
       },
-      confirmFocus(evt) {
+      confirmFocus:function(evt) {
         this.resultSet=false
       },
       /*
       * race condition - need to ensure user selected auto complete
       * appears to work and is triggered when open auto complete closes so as expected
       */
-      confirmBlur(evt) {
+      confirmBlur:function(evt) {
         setTimeout(function () {
           if (this.found!=this.search && this.searchChanged) {
             this.search=''
@@ -230,7 +232,8 @@
         }.bind(this), 180)
       },
 
-      confirmValue(evt) {
+      confirmValue:function(evt) {
+        var processSearch=true
         setTimeout(function () {
           if (!this.resultSet) {
             for (var i = 0; i <  this.results.length; i++) {
@@ -257,7 +260,7 @@
         }.bind(this), 180)
       },
 
-      onTab(evt) {
+      onTab:function(evt) {
         if (this.isOpen) {
           if (this.results.length > 0) {
             var ix = 0;
@@ -274,22 +277,22 @@
       isFull: function() {
         return this.found.length>0
       },
-      onArrowDown(evt) {
+      onArrowDown: function(evt) {
         if (this.arrowCounter < this.results.length) {
           this.arrowCounter = this.arrowCounter + 1;
         }
       },
-      onArrowUp() {
+      onArrowUp: function() {
         if (this.arrowCounter > 0) {
           this.arrowCounter = this.arrowCounter -1;
         }
       },
-      onEnter() {
+      onEnter: function() {
         this.setResult(this.results[this.arrowCounter]);
         this.isOpen = false;
         this.arrowCounter = -1;
       },
-      handleClickOutside(evt) {
+      handleClickOutside: function(evt) {
         if (!this.$el.contains(evt.target)) {
           this.isOpen = false;
           this.arrowCounter = -1;
@@ -311,7 +314,7 @@
         }
       }
     },
-    created () {
+    created: function () {
       this.currentSelected=this.selected
       if (this.selected && this.selected[this.valueField] && this.selected[this.keyField] ) {
         this.search=this.selected[this.valueField]
@@ -319,7 +322,7 @@
         this.lastSearch= this.search;
       }
     },
-    mounted() {
+    mounted: function() {
       document.addEventListener('click', this.handleClickOutside)
       if (this.selected && this.selected[this.valueField] && this.selected[this.keyField]) {
         this.search=this.selected[this.valueField]
@@ -327,7 +330,7 @@
         this.lastSearch= this.search;
       }
     },
-    destroyed() {
+    destroyed: function() {
       document.removeEventListener('click', this.handleClickOutside)
     }
   };
