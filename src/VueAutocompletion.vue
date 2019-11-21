@@ -7,11 +7,11 @@
            :class="[clazz,errorClazz]"
     />
 
-    <ul id="autocomplete-results" v-show="isOpen" class="autocomplete-results  form-control">
+    <ul id="autocomplete-results" v-show="isOpen"  ref="autocompleteResults" class="autocomplete-results  form-control">
       <li class="loading" v-if="isLoading">
         Loading results...
       </li>
-      <li v-else v-for="(result, i) in results" :key="i" @click="setResult(result)" class="autocomplete-items"
+      <li v-else v-for="(result, i) in results" :key="i"  ref="options"  @click="setResult(result,i)" class="autocomplete-items"
           :class="{ 'is-active': i === arrowCounter }">
         <div v-if="result.hasOwnProperty(remotePrimaryValue)">
         {{ result[remotePrimaryValue] }}
@@ -165,7 +165,8 @@
 
                 });
       },
-      setResult:function(result) {
+      setResult:function(result,i) {
+        this.arrowCounter = i;
         this.resultSet=true
         if (this.returnPromise) {
           this.$emit('return-promise', result)
@@ -277,15 +278,21 @@
       isFull: function() {
         return this.found.length>0
       },
-      onArrowDown: function(evt) {
-        if (this.arrowCounter < this.results.length) {
+      onArrowDown(evt) {
+        if (this.arrowCounter < this.results.length-1) {
           this.arrowCounter = this.arrowCounter + 1;
+          this.fixScrolling();
         }
       },
-      onArrowUp: function() {
+      onArrowUp() {
         if (this.arrowCounter > 0) {
-          this.arrowCounter = this.arrowCounter -1;
+          this.arrowCounter = this.arrowCounter - 1;
+          this.fixScrolling()
         }
+      },
+      fixScrolling(){
+        const liH = this.$refs.options[this.arrowCounter].clientHeight;
+        this.$refs.autocompleteResults.scrollTop = liH * this.arrowCounter;
       },
       onEnter: function() {
         this.setResult(this.results[this.arrowCounter]);

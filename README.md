@@ -446,13 +446,11 @@ export default {
 
 
 ## Changelog
+#### v.1.0.9
+-  list scrolling added when using tabs and keys to go down list
 
-#### v.1.0.2
-- Full documentation added
-#### v.1.0.1
-- Minor changes
-#### v.1.0.0
-- Initial release
+#### v.1.0.8
+-  First working revision
 
 
 ## Credits
