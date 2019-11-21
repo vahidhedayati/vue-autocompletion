@@ -129,22 +129,16 @@ export default {
 Remote lookup may or may not return an additional field:
 
 Remote data may come back as this - 
-when this happens auto complete will set appearsSometimes as the valueField and searchValue on auto complete  
+when data has `appearsSomething` this becomes `remote-primary-value` and is selected on screen and set on your objet
+When data has none the `fallbackValue` which is `remote-value` is set on your screen and set as your object
 ```javascript
    [
-     {myRemoteId:'something1',fallbackValue:'aaa1', appearsSomeTimes:'something1'}, 
-     {myRemoteId:'something2',fallbackValue:'aaa2', appearsSomeTimes:'something2'}, 
-     {myRemoteId:'something3', fallbackValue:'aaa2',appearsSomeTimes:'something3'} 
-    ]
-```
- 
-OR Remote data may come back as this  
-when this happens auto complete will set fallbackValue as the valueField and searchValue on auto complete
-```javascript
-   [
-     {myRemoteId:'something1',fallbackValue:'aaa1'}, 
-     {myRemoteId:'something2',fallbackValue:'aaa2'}, 
-     {myRemoteId:'something3', fallbackValue:'aaa2'} 
+     {myRemoteId:'something1',fallbackValue:'aaa1'},
+     {myRemoteId:'something2',fallbackValue:'aaa2', appearsSomeTimes:'something2'},  
+     {myRemoteId:'something3',fallbackValue:'aaa3'}, 
+     {myRemoteId:'something4',fallbackValue:'aaa4', appearsSomeTimes:'something4'}, 
+     {myRemoteId:'something5', fallbackValue:'aaa5',appearsSomeTimes:'something5'}, 
+     {myRemoteId:'something6', fallbackValue:'aaa7'} 
     ]
 ```
 
@@ -206,17 +200,12 @@ export default {
 
                         /**
                          [
-                         {myRemoteId:'something1',fallbackValue:'aaa1', appearsSomeTimes:'something1'},
-                         {myRemoteId:'something2',fallbackValue:'aaa2', appearsSomeTimes:'something2'},
-                         {myRemoteId:'something3', fallbackValue:'aaa2',appearsSomeTimes:'something3'}
-                         ]
-                         OR Remote data may come back as this
-                         when this happens auto complete will set fallbackValue as the valueField and searchValue on auto complete
-                         ```javascript
-                         [
-                         {myRemoteId:'something1',fallbackValue:'aaa1'},
-                         {myRemoteId:'something2',fallbackValue:'aaa2'},
-                         {myRemoteId:'something3', fallbackValue:'aaa2'}
+                             {myRemoteId:'something1',fallbackValue:'aaa1'},
+                             {myRemoteId:'something2',fallbackValue:'aaa2', appearsSomeTimes:'something2'},  
+                             {myRemoteId:'something3',fallbackValue:'aaa3'}, 
+                             {myRemoteId:'something4',fallbackValue:'aaa4', appearsSomeTimes:'something4'}, 
+                             {myRemoteId:'something5', fallbackValue:'aaa5',appearsSomeTimes:'something5'}, 
+                             {myRemoteId:'something6', fallbackValue:'aaa7'} 
                          ]
                          *
                          */
