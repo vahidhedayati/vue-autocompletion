@@ -4,9 +4,8 @@
   "description": "AutoComplete for Vue.js complete collection / building of  dynamic data sets",
   "main": "src/main.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build1": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "build": "webpack --mode production --output ./dist/vue-autocomplete.js"
+    "dev": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production  --progress --hide-modules --output ./dist/vue-autocomplete.js"
   },
   "keywords": [
     "vue",
