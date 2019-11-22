@@ -121,8 +121,59 @@ export default {
 </script>
 ```
 
+### Example 2 `vu-autocompletion-valid`: Validation using `vee-validate`
+Please refer to [demo project](https://github.com/vahidhedayati/vue-autocompletion-test), there are 2 classes loaded `Welcome` and `Welcome2`.
+The project has `"vee-validate": "^2.2.13"` enabled in `package.json`. Has also been tested on a project not running `vee-validate`
+ to ensure it works on a plain vuejs project.
 
-### Example 2: Remote object sometimes has additional data which should be selected 
+In `src/main.js` Following has been added 
+```javascript
+import VeeValidate from 'vee-validate';
+Vue.use(VeeValidate, { inject: false });
+```    
+
+Finally in `Welcome.vue`:
+```html
+   <vu-autocompletion-valid
+             @key-press="updateAutoCompleteItems"
+             name="vehicleName"
+             validation='required|max:50'
+             :validationErrors="validationErrors"
+             placeholder="aaa"
+             :selected="{}"
+             key-field="id" value-field="vehicleName"
+             :items="vehicles" />
+<script> 
+import {VuAutocompletionValid} from 'vue-autocompletion'
+ export default {
+        $_veeValidate: {
+            validator: 'new'
+        },
+   data () {
+            return {
+                vehicles:[{id:'a',vehicleName:'vehicle 01'},{id:'a0', vehicleName:'zyz vehice 01'},
+                    {id:'a1', vehicleName:'abc vehicle 02'},{id:'a2', vehicleName:'vehicle 03'},{id:'a3', vehicleName:'vehicle 03'},
+                    {id:'a4', vehicleName:'abc vehicle 04'},{id:'a5', vehicleName:'vehicle 05'},{id:'a6', vehicleName:'vehicle 06'},
+                    {id:'a7', vehicleName:'abc vehicle 07'},{id:'a8', vehicleName:'vehicle 08'},{id:'a9', vehicleName:'vehicle 09'}
+                ]
+            }
+        },
+        components: {
+            VuAutocompletionValid
+        },
+        methods: {
+            updateAutoCompleteItems: function (searchValue) {
+             //GET NEW LIST refresh Vehicles
+            },
+        },
+}
+
+</script>
+
+```
+
+
+### Example 3: Remote object sometimes has additional data which should be selected 
 
 
  
@@ -220,7 +271,7 @@ export default {
 ```
 
 
-### Example 3: Remote object sends 2 values one to search or show in search box and one to actually select
+### Example 4: Remote object sends 2 values one to search or show in search box and one to actually select
 
 This will show the `showValue` as it does auto complete when user selects the value set will be `actualValue` 
 both in the search box of auto complete and remote object capturing the `value field`
@@ -307,7 +358,7 @@ export default {
 
 
 
-### Example 4 : Return promise and deal with selected item manually
+### Example 5 : Return promise and deal with selected item manually
 
 ```html
   <autocomplete  
@@ -374,7 +425,7 @@ export default {
 
 
 
-### Example 5 : `v-model` directive not defined `@search-value` `@search-key` used instead
+### Example 6 : `v-model` directive not defined `@search-value` `@search-key` used instead
 
 ```html
   <autocomplete  
@@ -446,8 +497,14 @@ export default {
 
 
 ## Changelog
-#### v.1.1.10
-- Offical release has no validation capacity 
+
+#### v.1.1.0
+- ve-validation feature added - two different ways of calling plugin as outlined on Examples1 & ( Example2 Validation)
+ 
+
+#### v.1.0.10
+- Offical release has no validation capacity
+ 
 #### v.1.0.9
 -  list scrolling added when using tabs and keys to go down list
 
