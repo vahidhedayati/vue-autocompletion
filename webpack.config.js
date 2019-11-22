@@ -1,22 +1,19 @@
-var path = require('path')
-var webpack = require('webpack')
+const { VueLoaderPlugin }   = require('vue-loader')
+const MiniCssExtractPlugin  = require("mini-css-extract-plugin");
+const helpers               = require('./helpers');
+const env                   = process.env.NODE_ENV;
+const isDev                 = env === `development`;
 
 module.exports = {
     entry: './src/main.js',
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
-        filename: 'vue-autocomplete.js'
-    },
+
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: [
-                    'vue-style-loader',
-                    'css-loader'
-                ],
-            },      {
+                use: [MiniCssExtractPlugin.loader, "css-loader"]
+            },
+            {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
@@ -39,11 +36,19 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        }),
+        new VueLoaderPlugin()
+    ],
     resolve: {
+        extensions: [ '.js', '.vue' ],
         alias: {
-            'vue$': 'vue/dist/vue.esm.js'
-        },
-        extensions: ['*', '.js', '.vue', '.json']
+            'vue$': isDev ? 'vue/dist/vue.runtime.js' : 'vue/dist/vue.runtime.min.js',
+            '@': helpers.root('src')
+        }
     },
     devServer: {
         historyApiFallback: true,

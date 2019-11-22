@@ -499,7 +499,8 @@ export default {
 ## Changelog
 
 #### v.1.1.0
-- ve-validation feature added - two different ways of calling plugin as outlined on Examples1 & ( Example2 Validation)
+- vee-validation feature added - two different ways of calling plugin as outlined on Examples1 & ( Example2 Validation)
+- webpack3 upgraded to webpack4 within plugin - webpack.config.js updated all working 
  
 
 #### v.1.0.10
