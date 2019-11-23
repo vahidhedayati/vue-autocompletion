@@ -5,7 +5,6 @@
  * VueAutocompletionValid.vue
  *
  * This now means any future updates for both can be done in this one centralised places reducing duplicate changes
- * needed in both for future fixes etc
  *
  */
 export default {
