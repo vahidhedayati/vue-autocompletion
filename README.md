@@ -121,7 +121,7 @@ export default {
 </script>
 ```
 
-### Example 2 `vu-autocompletion-valid`: Validation using `vee-validate`
+### Example 2 `vue-autocompletion-valid`: Validation using `vee-validate`
 Please refer to [demo project](https://github.com/vahidhedayati/vue-autocompletion-test), there are 2 classes loaded `Welcome` and `Welcome2`.
 The project has `"vee-validate": "^2.2.13"` enabled in `package.json`. Has also been tested on a project not running `vee-validate`
  to ensure it works on a plain vuejs project.
