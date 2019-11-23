@@ -1,11 +1,13 @@
 /**
  * Vahid Hedayati 23/11/2019
- * VueAutocompletionLogic centralises all the default properties for
- * VueAutocompletion.vue
- * VueAutocompletionValid.vue
  *
- * This now means any future updates for both can be done in this one centralised places reducing duplicate changes
+ * VueAutocompletionLogic centralises all the default properties for:
  *
+ * - VueAutocompletion.vue
+ * - VueAutocompletionValid.vue
+ * ----
+ * This now means any future updates for both can be done in this one
+ * centralised place. Reducing duplicate changes need in both.
  */
 export default {
     loadProps(loadValidation) {
@@ -312,8 +314,8 @@ export default {
             }
         }
     },
-    loadCreated(loadValidation) {
-        if (loadValidation!=undefined && loadValidation===true) {
+    loadCreated(loadMounted) {
+        if (loadMounted!=undefined && loadMounted===true) {
             document.addEventListener('click', this.handleClickOutside)
         } else {
             this.currentSelected=this.selected
