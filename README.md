@@ -134,7 +134,7 @@ Vue.use(VeeValidate, { inject: false });
 
 Finally in `Welcome.vue`:
 ```html
-   <vu-autocompletion-valid
+   <vue-autocompletion-valid
              @key-press="updateAutoCompleteItems"
              name="vehicleName"
              validation='required|max:50'
@@ -144,7 +144,7 @@ Finally in `Welcome.vue`:
              key-field="id" value-field="vehicleName"
              :items="vehicles" />
 <script> 
-import {VuAutocompletionValid} from 'vue-autocompletion'
+import {VueAutocompletionValid} from 'vue-autocompletion'
  export default {
         $_veeValidate: {
             validator: 'new'
@@ -159,7 +159,7 @@ import {VuAutocompletionValid} from 'vue-autocompletion'
             }
         },
         components: {
-            VuAutocompletionValid
+            VueAutocompletionValid
         },
         methods: {
             updateAutoCompleteItems: function (searchValue) {
@@ -497,7 +497,14 @@ export default {
 
 
 ## Changelog
+#### v.1.1.1
 
+- `VueAutocompletionLogic.js` added - centralising all the default properties for: 
+  * VueAutocompletion.vue
+  * VueAutocompletionValid.vue
+- `VuAutocompletionValid` renamed to `VueAutocompletionValid` "e" was missing  
+  
+ 
 #### v.1.1.0
 - vee-validation feature added - two different ways of calling plugin as outlined on Examples1 & ( Example2 Validation)
 - webpack3 upgraded to webpack4 within plugin - webpack.config.js updated all working 
