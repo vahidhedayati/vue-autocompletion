@@ -6,7 +6,13 @@ const isDev                 = env === `development`;
 
 module.exports = {
     entry: './src/main.js',
-
+    optimization: {
+        splitChunks: {
+            // Must be specified for HtmlWebpackPlugin to work correctly.
+            // See: https://github.com/jantimon/html-webpack-plugin/issues/882
+            chunks: `all`,
+        },
+    },
     module: {
         rules: [
             {

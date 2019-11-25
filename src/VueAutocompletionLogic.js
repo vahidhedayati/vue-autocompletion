@@ -283,7 +283,9 @@ export default {
                 const liH = this.$refs.options[this.arrowCounter].clientHeight;
                 this.$refs.autocompleteResults.scrollTop = liH * this.arrowCounter;
             },
-            onEnter: function() {
+            onEnter: function(e) {
+                //don't attempt to submit form
+                e.preventDefault();
                 this.setResult(this.results[this.arrowCounter]);
                 this.isOpen = false;
                 this.arrowCounter = -1;
