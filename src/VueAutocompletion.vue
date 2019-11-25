@@ -1,6 +1,6 @@
 <template>
   <span class="autocomplete ">
-    <input type="search" :name="name" @input="onChange"  :autocomplete="name"
+    <input type="search" :name="name" @input="onChange"  :autocomplete="name"  @mouseenter="arrowCounter=0"
            v-model="search" :placeholder="placeholder" @keydown.down="onArrowDown" @change="confirmValue(search)"
            @keydown.tab="onTab" @keydown.up="onArrowUp" @keydown.enter="onEnter" @blur="confirmBlur" @focus="confirmFocus"
            class="form-control"
@@ -13,12 +13,7 @@
       </li>
       <li v-else v-for="(result, i) in results" :key="i"  ref="options"  @click="setResult(result,i)" class="autocomplete-items"
           :class="{ 'is-active': i === arrowCounter }">
-        <div v-if="result.hasOwnProperty(remotePrimaryValue)">
-        {{ result[remotePrimaryValue] }}
-        </div>
-        <div v-else>
-          {{ result[currentValue] }}
-        </div>
+        {{result.hasOwnProperty(remotePrimaryValue) ?  result[remotePrimaryValue] : result[currentValue]  }}
       </li>
     </ul>
     <input type="hidden" name="hiddenId" v-model="hiddenId"/>

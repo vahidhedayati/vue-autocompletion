@@ -1,6 +1,10 @@
 ## Changelog
+#### v.1.1.3
+- css style changes - mouse hover and using arrow keys to navigate selectable items show same hovering effect
+
 #### v.1.1.2
 - on return using tabs no longer attempts to submit form - `e.preventDefault()` added
+
 #### v.1.1.1
 
 - `VueAutocompletionLogic.js` added - centralising all the default properties for: 

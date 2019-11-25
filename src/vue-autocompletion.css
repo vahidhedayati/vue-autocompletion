@@ -19,10 +19,11 @@
     padding: 4px 2px;
     cursor: pointer;
 }
-.autocomplete-result.is-active,
-.autocomplete-result:hover {
-    background-color: #4AAE9B;
+.autocomplete-items.is-active,
+.autocomplete-items:hover {
+    background-color: DodgerBlue;
     color: white;
+    font-weight: bold;
 }
 
 .autocomplete-items {
@@ -34,19 +35,7 @@
     list-style: none;
     text-align: left;
     right: 0;
-}
-.autocomplete-items div {
     padding-left: 10px;
     cursor: pointer;
 }
-.autocomplete-items div:hover {
-    background-color: #4AAE9B;
-    color: white;
-}
-.autocomplete-active {
-    background-color: DodgerBlue !important;
-    color: #ffffff;
-}
-.is-active {
-    font-weight: bold;
-}
+
