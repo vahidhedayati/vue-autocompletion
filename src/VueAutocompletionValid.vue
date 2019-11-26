@@ -1,13 +1,13 @@
 <template>
   <span class="autocomplete ">
-    <input type="search" :name="name" @input="onChange" v-validate="validation" :autocomplete="name"  @mouseenter="arrowCounter=0"
+    <input type="search" :name="name" :disabled="disabled"  :readonly="readonly"  @input="onChange" v-validate="validation" :autocomplete="name"  @mouseenter="arrowCounter=0"
            v-model="search" :placeholder="placeholder" @keydown.down="onArrowDown" @change="confirmValue(search)"
            @keydown.tab="onTab" @keydown.up="onArrowUp" @keydown.enter="onEnter" @blur="confirmBlur" @focus="confirmFocus"
            class="form-control"
            :class="[clazz,errorClazz]"
     />
     <div v-if="errors && errors.has(name)" class="col-sm-12 alert alert-danger">{{ errors.first(name)}}</div>
-      <ul id="autocomplete-results" v-show="isOpen"  ref="autocompleteResults" class="autocomplete-results  form-control">
+      <ul id="autocomplete-results" v-show="isOpen && !readonly && !disabled"  ref="autocompleteResults" class="autocomplete-results  form-control">
           <li class="loading" v-if="isLoading">
             Loading results...
           </li>

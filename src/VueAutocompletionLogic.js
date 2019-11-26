@@ -83,7 +83,17 @@ export default {
                 type: Boolean,
                 required: false,
                 default: false
-            }
+            },
+            disabled: {
+                type: Boolean,
+                required: false,
+                default: false
+            },
+            readonly: {
+                type: Boolean,
+                required: false,
+                default: false
+            },
         }
         if (loadValidation!=undefined && loadValidation===true) {
             p['validation']= {type: String, required: false, default:""}

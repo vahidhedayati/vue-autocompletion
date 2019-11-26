@@ -52,6 +52,8 @@ name| String | - |The name of select field must match object name that is being 
 searchLength|Number| 3| Amount of characters before triggering dropdown
 items | Array | [] | parent's array of selectable objects - can be fixed or db driven - key presses by user trigger list to update
 isAsync| Boolean | false | unused feature came with original guide 
+disabled | Boolean | false | set to true to disable selectable area
+readonly | Boolean | false | set to true to make area non selectable and readonly
 
 #### All Available Props for vue-autocompletion-valid (above + below)
 Prop | Type | Default | Description
