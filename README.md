@@ -68,6 +68,7 @@ Event | Description
 @search-value| if `v-model` directive declared then not required but if set allows you to manipulate locally from set selected value field
 @search-key| if `v-model` directive declared then not required  but if set allows you to manipulate locally from set selected key field
 @return-promise| Not required but if set won't manipulate parent object instead return the full object from remote selection back to you, this contains the entire object selected. It may have many other values you need to update page with.
+@method-used|returns a string of mouse or keyboard if they selected auto complete with mouse or keyboard if they used tab up down arrows and enter 
 
 ## Usage
 
@@ -75,15 +76,17 @@ Event | Description
 
 ##### [Example 1: Basic](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-1.md) 
 
-##### [Example 2 `vue-autocompletion-valid`: Validation using `vee-validate`](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-2.md) 
+##### [Example 2: `vue-autocompletion-valid`: Validation using `vee-validate`](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-2.md) 
 
 ##### [Example 3: Remote object sometimes has additional data which should be selected](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-3.md) 
 
 ##### [Example 4: Remote object sends 2 values one to search or show in search box and one to actually select](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-4.md)
 
-##### [Example 5 : Return promise and deal with selected item manually](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-5.md)
+##### [Example 5: Return promise and deal with selected item manually](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-5.md)
 
-##### [Example 6 : `v-model` directive not defined `@search-value` `@search-key` used instead](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-6.md)
+##### [Example 6: `v-model` directive not defined `@search-value` `@search-key` used instead](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-6.md)
+
+##### [Example 7: Multiple dynamic select box with add remove function : Demo of method-used](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-7.md)
 
 #### [Changelog](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/change-log.md)
 

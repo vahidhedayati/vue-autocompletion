@@ -1,4 +1,9 @@
 ## Changelog
+#### v.1.1.5
+- `id` `ref` tags added to autocomplete will be set to what ever you set `name` as .
+- new `Event` `method-used` returned - please review example-7 
+- there was an issue with pre-loading existing data the created mounted functions did not work single mounted added
+
 #### v.1.1.4
 - Props `readonly` and `disabled` defaulted to false added
 

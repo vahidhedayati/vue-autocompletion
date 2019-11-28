@@ -1,8 +1,12 @@
 <template>
   <span class="autocomplete ">
-    <input type="search" :name="name"  :disabled="disabled"  :readonly="readonly" @input="onChange"  :autocomplete="name"  @mouseenter="arrowCounter=0"
-           v-model="search" :placeholder="placeholder" @keydown.down="onArrowDown" @change="confirmValue(search)"
-           @keydown.tab="onTab" @keydown.up="onArrowUp" @keydown.enter="onEnter" @blur="confirmBlur" @focus="confirmFocus"
+    <input type="search" :name="name" :id="name" :ref="name"
+           :disabled="disabled"  :readonly="readonly" @input="onChange"
+           :autocomplete="name"  @mouseenter="arrowCounter=0"
+           v-model="search" :placeholder="placeholder"
+           @keydown.down="onArrowDown" @change="confirmValue(search)"
+           @keydown.tab="onTab" @keydown.up="onArrowUp"
+           @keydown.enter="onEnter" @blur="confirmBlur" @focus="confirmFocus"
            class="form-control"
            :class="[clazz,errorClazz]"
     />
@@ -11,7 +15,7 @@
       <li class="loading" v-if="isLoading">
         Loading results...
       </li>
-      <li v-else v-for="(result, i) in results" :key="i"  ref="options"  @click="setResult(result,i)" class="autocomplete-items"
+      <li v-else v-for="(result, i) in results" :key="i"  ref="options"  @click="setMouseResult(result,i)" class="autocomplete-items"
           :class="{ 'is-active': i === arrowCounter }">
         {{result.hasOwnProperty(remotePrimaryValue) ?  result[remotePrimaryValue] : result[currentValue]  }}
       </li>
@@ -27,8 +31,15 @@
     computed:VueAutocompletionLogic.loadComputed(),
     methods:VueAutocompletionLogic.loadMethods(),
     watch: VueAutocompletionLogic.loadWatch(),
-    created:VueAutocompletionLogic.loadCreated(),
-    mounted: VueAutocompletionLogic.loadCreated(true),
+    mounted:function() {
+      document.addEventListener('click', this.handleClickOutside)
+      this.currentSelected=this.selected
+      if (this.selected && this.selected[this.valueField] && this.selected[this.keyField] ) {
+        this.search=this.selected[this.valueField]
+        this.hiddenId=this.selected[this.keyField]
+        this.lastSearch= this.search;
+      }
+    },
     destroyed: function() {
       document.removeEventListener('click', this.handleClickOutside)
     },

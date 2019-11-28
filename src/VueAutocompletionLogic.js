@@ -164,6 +164,10 @@ export default {
 
                     });
             },
+            setMouseResult:function(result,i) {
+                this.$emit('method-used', 'mouse')
+                this.setResult(result,i)
+            },
             setResult:function(result,i) {
                 this.arrowCounter = i;
                 this.resultSet=true
@@ -294,6 +298,7 @@ export default {
                 this.$refs.autocompleteResults.scrollTop = liH * this.arrowCounter;
             },
             onEnter: function(e) {
+                this.$emit('method-used', 'keyboard')
                 //don't attempt to submit form
                 e.preventDefault();
                 this.setResult(this.results[this.arrowCounter]);
@@ -324,18 +329,6 @@ export default {
                     this.isLoading = false;
                 }
             }
-        }
-    },
-    loadCreated(loadMounted) {
-        if (loadMounted!=undefined && loadMounted===true) {
-            document.addEventListener('click', this.handleClickOutside)
-        } else {
-            this.currentSelected=this.selected
-        }
-        if (this.selected && this.selected[this.valueField] && this.selected[this.keyField] ) {
-            this.search=this.selected[this.valueField]
-            this.hiddenId=this.selected[this.keyField]
-            this.lastSearch= this.search;
         }
     }
 }
