@@ -74,6 +74,8 @@ Event | Description
 
 ##### [Working Demo project (needs to be downloaded run)](https://github.com/vahidhedayati/vue-autocompletion-test)
 
+#### [YouTube demo video](https://www.youtube.com/watch?v=8gjKhyUlEro)
+
 ##### [Example 1: Basic](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-1.md) 
 
 ##### [Example 2: `vue-autocompletion-valid`: Validation using `vee-validate`](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-2.md) 
