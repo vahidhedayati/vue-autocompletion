@@ -1,6 +1,6 @@
 {
   "name": "vue-autocompletion",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "AutoComplete for Vue.js complete collection / building of  dynamic data sets",
   "main": "src/main.js",
   "scripts": {
@@ -13,7 +13,8 @@
     "autocomplete"
   ],
   "dependencies": {
-    "vue": "^2.5.0"
+    "vue": "^2.5.0",
+    "jquery": "^3.3.1"
   },
   "browserslist": [
     "> 1%",

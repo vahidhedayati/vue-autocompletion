@@ -1,4 +1,8 @@
 ## Changelog
+#### v.1.1.6
+- clear function in input search emit or overwrite v-model 
+- css style added to show x for clear options
+- jquery dependency added to allow the new functionality to work  
 #### v.1.1.5
 - `id` `ref` tags added to autocomplete will be set to what ever you set `name` as .
 - new `Event` `method-used` returned - please review example-7 

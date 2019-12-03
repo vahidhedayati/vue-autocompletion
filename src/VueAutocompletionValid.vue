@@ -1,6 +1,6 @@
 <template>
   <span class="autocomplete ">
-    <input type="search" :name="name" :id="name" :ref="name"
+    <input type="search" :name="name" :id="randomId" :ref="name"
            :disabled="disabled"  :readonly="readonly"
            @input="onChange" v-validate="validation"
            :autocomplete="name"  @mouseenter="arrowCounter=0"
@@ -25,6 +25,7 @@
   </span>
 </template>
 <script>
+    import $ from 'jquery';
     import VueAutocompletionLogic from "./VueAutocompletionLogic";
     export default {
         name: 'vue-autocompletion-valid',
@@ -42,6 +43,24 @@
                 this.lastSearch= this.search;
             }
         },
+        updated() {
+            var randomId = this.randomId;
+            var main = this;
+            $('.'+randomId).on('search', function(tt){
+                if(!tt.value){
+                    main.hiddenId = ''
+                    var selected = main.selected
+                    selected[main.valueField] =''
+                    selected[main.keyField] = ''
+                    main.$emit('input', selected)
+                    main.$emit('search-value', '');
+                    main.$emit('search-key', '');
+                }
+            });
+            setTimeout(function(k) {
+                $('.'+randomId).off('search');
+            }, 1);
+        },
         destroyed: function() {
             document.removeEventListener('click', this.handleClickOutside)
         },
@@ -51,6 +70,7 @@
                 results: [],
                 search: '',
                 found:'',
+                randomId:this.name+' '+Math.floor((Math.random() * 10000) + 1),
                 hiddenId:'',
                 isLoading: false,
                 resultSet:false,
