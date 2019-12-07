@@ -1,4 +1,13 @@
 ## Changelog
+#### v.1.1.7
+- clear function in input search emit or overwrite v-model now only to run if:
+  overrideClearFunction is set to true default fallse
+- additionalProperties array added as part of input to clean up multimple items and set multiple items in one go.
+```
+:additionalProperties="[{valueField:'countryName', remoteValue:'countryName', keyField:'countryCode', remoteKey:'countryCode'},
+                                              {valueField:'state'},
+                                              {keyField:'countryId', remoteKey:'countryCode' }]"
+```
 #### v.1.1.6
 - clear function in input search emit or overwrite v-model 
 - css style added to show x for clear options

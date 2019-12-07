@@ -54,6 +54,8 @@ items | Array | [] | parent's array of selectable objects - can be fixed or db d
 isAsync| Boolean | false | unused feature came with original guide 
 disabled | Boolean | false | set to true to disable selectable area
 readonly | Boolean | false | set to true to make area non selectable and readonly
+overrideClearFunction| Boolean | false | set to true to override html 5 x that appears in input and use plugins version. This may be needed depending on vue object modelling.
+additionalProperties | Array | [] |A list of additional objects to set or clear in one go refer to example 8 `[{valueField:'countryName', remoteValue:'countryName', keyField:'countryCode', remoteKey:'countryCode'}, {objectName:'subObject', keyField:'countryId', remoteKey:'countryCode' }, {valueField:'state'}, {keyField:'countryId', remoteKey:'countryCode' }, ]` 
 
 #### All Available Props for vue-autocompletion-valid (above + below)
 Prop | Type | Default | Description

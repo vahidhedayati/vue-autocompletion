@@ -9,6 +9,7 @@
  * This now means any future updates for both can be done in this one
  * centralised place. Reducing duplicate changes need in both.
  */
+import $ from 'jquery';
 export default {
     loadProps(loadValidation) {
         var p = {
@@ -67,10 +68,22 @@ export default {
                 type: String,
                 default: 'search'
             },
+            overrideClearFunction: {
+                type: Boolean,
+                required: false,
+                default: false
+            },
             searchLength: {
                 type: Number,
                 required: false,
                 default: 3
+            },
+            additionalProperties: {
+                type: Array,
+                required: false,
+                default: function () {
+                    return []
+                }
             },
             items: {
                 type: Array,
@@ -128,17 +141,12 @@ export default {
         }
         return p
     },
-    loadMethods() {
+    loadMethods(validationMode) {
         var p = {
             onChange:function() {
                 this.searchChanged=true
                 if (this.currentSelected[this.valueField]!='' || this.currentSelected[this.keyField]!=''){
-                    var aa = this.selected
-                    aa[this.valueField] =''
-                    aa[this.keyField] = ''
-                    this.currentSelected=aa
-
-                    this.$emit('input', aa)
+                   this.emitBlankDefaults()
                 }
                 if (this.search.length>=this.searchLength) {
                     this.$emit('key-press', this.search);
@@ -171,15 +179,15 @@ export default {
             setResult:function(result,i) {
                 this.arrowCounter = i;
                 this.resultSet=true
+                var key =this.currentValue
+                if (this.remotePrimaryValue) {
+                    key = result.hasOwnProperty(this.remotePrimaryValue) ? this.remotePrimaryValue :this.currentValue
+                }
+                if (this.remoteValueSelect && result.hasOwnProperty(this.remoteValueSelect)) {
+                    key = this.remoteValueSelect
+                }
                 if (this.returnPromise) {
                     this.$emit('return-promise', result)
-                    var key =this.currentValue
-                    if (this.remotePrimaryValue) {
-                        key = result.hasOwnProperty(this.remotePrimaryValue) ? this.remotePrimaryValue : this.currentValue
-                    }
-                    if (this.remoteValueSelect && result.hasOwnProperty(this.remoteValueSelect)) {
-                        key = this.remoteValueSelect
-                    }
                     this.found = result[key];
                     if (this.found.length > 0) {
                         this.search = this.found;
@@ -187,34 +195,36 @@ export default {
                     }
                     this.isOpen = false;
                 } else {
-                    var key =this.currentValue
-                    if (this.remotePrimaryValue) {
-                        key = result.hasOwnProperty(this.remotePrimaryValue) ? this.remotePrimaryValue :this.currentValue
-                    }
-                    if (this.remoteValueSelect && result.hasOwnProperty(this.remoteValueSelect)) {
-                        key = this.remoteValueSelect
-                    }
                     this.found = result[key];
                     if (this.found.length > 0) {
                         this.search = this.found;
                         this.hiddenId = result[this.currentKey];
-
-                        var aa = this.selected
-                        aa[this.valueField] = this.search
-                        aa[this.keyField] = this.hiddenId
-                        this.$emit('input', aa)
-
+                        var selected = this.selected
+                        this.additionalProperties.forEach(function(element) {
+                            if (element.objectName) {
+                                if (element.keyField) {
+                                    selected[element.objectName][element.keyField] =result[element.remoteKey ? element.remoteKey : element.keyField]
+                                }
+                                if (element.valueField) {
+                                    selected[element.objectName][element.valueField] =result[element.remoteValue ? element.remoteValue :element.valueField]
+                                }
+                            } else {
+                                if (element.keyField) {
+                                    selected[element.keyField] =result[element.remoteKey ? element.remoteKey : element.keyField]
+                                }
+                                if (element.valueField) {
+                                    selected[element.valueField] =result[element.remoteValue ? element.remoteValue :element.valueField]
+                                }
+                            }
+                        })
+                        selected[this.valueField] = this.search
+                        selected[this.keyField] = this.hiddenId
+                        this.$emit('input', selected)
                         this.$emit('search-value', this.search);
                         this.$emit('search-key', this.hiddenId);
                         this.isOpen = false;
                     } else {
-                        var aa = this.selected
-                        aa[this.valueField] =''
-                        aa[this.keyField] = ''
-                        this.$emit('input', aa)
-
-                        this.$emit('search-value', '');
-                        this.$emit('search-key', '');
+                        this.emitBlankDefaults()
                         this.isOpen = false;
                     }
                 }
@@ -223,47 +233,82 @@ export default {
             confirmFocus:function(evt) {
                 this.resultSet=false
             },
-            /*
-            * race condition - need to ensure user selected auto complete
-            * appears to work and is triggered when open auto complete closes so as expected
-            */
-            confirmBlur:function(evt) {
-                setTimeout(function () {
-                    if (this.found!=this.search && this.searchChanged) {
-                        this.search=''
-                        this.hiddenId = ''
-                    }
-                }.bind(this), 180)
-            },
-
-            confirmValue:function(evt) {
-                var processSearch=true
-                setTimeout(function () {
-                    if (!this.resultSet) {
-                        for (var i = 0; i <  this.results.length; i++) {
-                            if ((this.results[i]).hasOwnProperty(this.remotePrimaryValue)){
-                                if ((this.results[i])[this.remotePrimaryValue].toLowerCase()===this.search.toLowerCase()) {
-                                    this.isOpen = false;
-                                    this.processSearch=false
-                                    this.setResult(this.results[i])
-                                }
-                            } else {
-                                if ((this.results[i])[this.currentValue].toLowerCase()===this.search.toLowerCase()) {
-                                    this.isOpen = false;
-                                    this.processSearch=false
-                                    this.setResult(this.results[i])
-                                }
+            emitBlankDefaults() {
+                if (this.found!=this.search && this.searchChanged) {
+                    this.search = ''
+                    this.hiddenId = ''
+                    var selected = this.selected
+                    selected[this.valueField] = ''
+                    selected[this.keyField] = ''
+                    this.currentSelected = selected
+                    this.additionalProperties.forEach(function (element) {
+                        if (element.objectName) {
+                            if (element.keyField) {
+                                selected[element.objectName][element.keyField] = ''
                             }
-
+                            if (element.valueField) {
+                                selected[element.objectName][element.valueField] = ''
+                            }
+                        } else {
+                            if (element.keyField) {
+                                selected[element.keyField] = ''
+                            }
+                            if (element.valueField) {
+                                selected[element.valueField] = ''
+                            }
                         }
-                        if (this.processSearch && (this.found.length===0||this.found.length>0 && this.search != this.result )) {
-                            this.search=''
-                            this.found=''
+                    })
+                    this.$emit('input', selected)
+                    this.$emit('search-value', '');
+                    this.$emit('search-key', '');
+                }
+            },
+            confirmBlur:function(evt) {
+                if (validationMode) {
+                    setTimeout(function () {
+                        //race condition - need to ensure user selected auto complete
+                        //only with vue-validation involved -
+                        this.emitBlankDefaults()
+                    }.bind(this), 300)
+                } else {
+                    this.emitBlankDefaults()
+                }
+            },
+            confirmValue:function(evt) {
+                if (validationMode) {
+                    setTimeout(function () {
+                        // race condition - need to ensure user selected auto complete
+                        // appears to work and is triggered when open auto complete closes so as expected
+                        // only with vue-validation involved -
+                        this.confirmAndSet(evt)
+                    }.bind(this), 300)
+                } else {
+                    this.confirmAndSet(evt)
+                }
+            },
+            confirmAndSet(evt) {
+                if (!this.resultSet) {
+                    for (var i = 0; i <  this.results.length; i++) {
+                        if ((this.results[i]).hasOwnProperty(this.remotePrimaryValue)){
+                            if ((this.results[i])[this.remotePrimaryValue].toLowerCase()===this.search.toLowerCase()) {
+                                this.isOpen = false;
+                                this.processSearch=false
+                                this.setResult(this.results[i])
+                            }
+                        } else {
+                            if ((this.results[i])[this.currentValue].toLowerCase()===this.search.toLowerCase()) {
+                                this.isOpen = false;
+                                this.processSearch=false
+                                this.setResult(this.results[i])
+                            }
                         }
                     }
-                }.bind(this), 180)
+                    if (this.processSearch && (this.found.length===0||this.found.length>0 && this.search != this.result )) {
+                        this.search=''
+                        this.found=''
+                    }
+                }
             },
-
             onTab:function(evt) {
                 if (this.isOpen) {
                     if (this.results.length > 0) {
@@ -313,6 +358,49 @@ export default {
             }
         };
         return p;
+    },
+    updated:function(thiss) {
+        document.addEventListener('click', thiss.handleClickOutside)
+        thiss.currentSelected=thiss.selected
+        if (thiss.selected && thiss.selected[thiss.valueField] && thiss.selected[thiss.keyField] ) {
+            thiss.search=thiss.selected[thiss.valueField]
+            thiss.hiddenId=thiss.selected[thiss.keyField]
+            thiss.lastSearch= thiss.search;
+        }
+        if (thiss.overrideClearFunction) {
+            var randomId = thiss.randomId;
+            var main = thiss;
+            $('.'+randomId).on('search', function(tt){
+                if(!tt.value){
+                    main.hiddenId = ''
+                    var selected = main.selected
+                    selected[main.valueField] =''
+                    selected[main.keyField] = ''
+                    main.currentSelected=selected
+                    main.additionalProperties.forEach(function(element) {
+                        if (element.objectName) {
+                            if (element.keyField) {
+                                selected[element.objectName][element.keyField] =''
+                            }
+                            if (element.valueField) {
+                                selected[element.objectName][element.valueField] =''
+                            }
+                        } else {
+                            if (element.keyField) {
+                                selected[element.keyField] =''
+                            }
+                            if (element.valueField) {
+                                selected[element.valueField] =''
+                            }
+                        }
+                    })
+                    main.$emit('input', selected)
+                }
+            });
+            setTimeout(function(k) {
+                $('.'+randomId).off('search');
+            }, 1);
+        }
     },
     loadWatch() {
         return {

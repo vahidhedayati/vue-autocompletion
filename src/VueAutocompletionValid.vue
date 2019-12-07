@@ -1,6 +1,6 @@
 <template>
   <span class="autocomplete ">
-    <input type="search" :name="name" :id="randomId" :ref="name"
+    <input type="search" :name="name" :id="name" :ref="name"
            :disabled="disabled"  :readonly="readonly"
            @input="onChange" v-validate="validation"
            :autocomplete="name"  @mouseenter="arrowCounter=0"
@@ -9,7 +9,7 @@
            @keydown.tab="onTab" @keydown.up="onArrowUp"
            @keydown.enter="onEnter" @blur="confirmBlur" @focus="confirmFocus"
            class="form-control"
-           :class="[clazz,errorClazz]"
+           :class="[clazz,errorClazz,randomId]"
     />
     <div v-if="errors && errors.has(name)" class="col-sm-12 alert alert-danger">{{ errors.first(name)}}</div>
       <ul id="autocomplete-results" v-show="isOpen && !readonly && !disabled"  ref="autocompleteResults" class="autocomplete-results  form-control">
@@ -25,42 +25,16 @@
   </span>
 </template>
 <script>
-    import $ from 'jquery';
+
     import VueAutocompletionLogic from "./VueAutocompletionLogic";
     export default {
         name: 'vue-autocompletion-valid',
         inject: ["$validator"],
         props:VueAutocompletionLogic.loadProps(true),
         computed:VueAutocompletionLogic.loadComputed(true),
-        methods:VueAutocompletionLogic.loadMethods(),
+        methods:VueAutocompletionLogic.loadMethods(true),
         watch: VueAutocompletionLogic.loadWatch(),
-        mounted:function() {
-            document.addEventListener('click', this.handleClickOutside)
-            this.currentSelected=this.selected
-            if (this.selected && this.selected[this.valueField] && this.selected[this.keyField] ) {
-                this.search=this.selected[this.valueField]
-                this.hiddenId=this.selected[this.keyField]
-                this.lastSearch= this.search;
-            }
-        },
-        updated() {
-            var randomId = this.randomId;
-            var main = this;
-            $('.'+randomId).on('search', function(tt){
-                if(!tt.value){
-                    main.hiddenId = ''
-                    var selected = main.selected
-                    selected[main.valueField] =''
-                    selected[main.keyField] = ''
-                    main.$emit('input', selected)
-                    main.$emit('search-value', '');
-                    main.$emit('search-key', '');
-                }
-            });
-            setTimeout(function(k) {
-                $('.'+randomId).off('search');
-            }, 1);
-        },
+        updated(){ return VueAutocompletionLogic.updated(this)},
         destroyed: function() {
             document.removeEventListener('click', this.handleClickOutside)
         },
@@ -70,7 +44,7 @@
                 results: [],
                 search: '',
                 found:'',
-                randomId:this.name+' '+Math.floor((Math.random() * 10000) + 1),
+                randomId:this.name+'_'+Math.floor((Math.random() * 10000) + 1),
                 hiddenId:'',
                 isLoading: false,
                 resultSet:false,
