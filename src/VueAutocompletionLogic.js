@@ -97,6 +97,16 @@ export default {
                 required: false,
                 default: false
             },
+            setTimeOut: {
+                type: Boolean,
+                required: false,
+                default: false
+            },
+            timeOutPeriod: {
+                type: Number,
+                required: false,
+                default: 300
+            },
             disabled: {
                 type: Boolean,
                 required: false,
@@ -145,9 +155,7 @@ export default {
         var p = {
             onChange:function() {
                 this.searchChanged=true
-                if (this.currentSelected[this.valueField]!='' || this.currentSelected[this.keyField]!=''){
-                   this.emitBlankDefaults()
-                }
+                this.emitBlankDefaults(this.currentSelected[this.valueField]!='' || this.currentSelected[this.keyField]!='')
                 if (this.search.length>=this.searchLength) {
                     this.$emit('key-press', this.search);
                     if (this.isAsync) {
@@ -224,7 +232,7 @@ export default {
                         this.$emit('search-key', this.hiddenId);
                         this.isOpen = false;
                     } else {
-                        this.emitBlankDefaults()
+                        this.emitBlankDefaults(true)
                         this.isOpen = false;
                     }
                 }
@@ -233,8 +241,8 @@ export default {
             confirmFocus:function(evt) {
                 this.resultSet=false
             },
-            emitBlankDefaults() {
-                if (this.found!=this.search && this.searchChanged) {
+            emitBlankDefaults(logic) {
+                if (logic) {
                     this.search = ''
                     this.hiddenId = ''
                     var selected = this.selected
@@ -268,10 +276,10 @@ export default {
                     setTimeout(function () {
                         //race condition - need to ensure user selected auto complete
                         //only with vue-validation involved -
-                        this.emitBlankDefaults()
-                    }.bind(this), 300)
+                        this.emitBlankDefaults(this.found!=this.search && this.searchChanged)
+                    }.bind(this), this.timeOutPeriod)
                 } else {
-                    this.emitBlankDefaults()
+                    this.emitBlankDefaults(this.found!=this.search )
                 }
             },
             confirmValue:function(evt) {
@@ -281,7 +289,7 @@ export default {
                         // appears to work and is triggered when open auto complete closes so as expected
                         // only with vue-validation involved -
                         this.confirmAndSet(evt)
-                    }.bind(this), 300)
+                    }.bind(this), this.timeOutPeriod)
                 } else {
                     this.confirmAndSet(evt)
                 }
@@ -359,14 +367,19 @@ export default {
         };
         return p;
     },
-    updated:function(thiss) {
+    mounted:function(thiss) {
         document.addEventListener('click', thiss.handleClickOutside)
         thiss.currentSelected=thiss.selected
         if (thiss.selected && thiss.selected[thiss.valueField] && thiss.selected[thiss.keyField] ) {
             thiss.search=thiss.selected[thiss.valueField]
             thiss.hiddenId=thiss.selected[thiss.keyField]
             thiss.lastSearch= thiss.search;
+        } else {
+            thiss.emitBlankDefaults(true)
         }
+    },
+    updated:function(thiss) {
+        this.mounted(thiss)
         if (thiss.overrideClearFunction) {
             var randomId = thiss.randomId;
             var main = thiss;

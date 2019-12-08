@@ -56,7 +56,8 @@ disabled | Boolean | false | set to true to disable selectable area
 readonly | Boolean | false | set to true to make area non selectable and readonly
 overrideClearFunction| Boolean | false | set to true to override html 5 x that appears in input and use plugins version. This may be needed depending on vue object modelling.
 additionalProperties | Array | [] |A list of additional objects to set or clear in one go refer to example 8 `[{valueField:'countryName', remoteValue:'countryName', keyField:'countryCode', remoteKey:'countryCode'}, {objectName:'subObject', keyField:'countryId', remoteKey:'countryCode' }, {valueField:'state'}, {keyField:'countryId', remoteKey:'countryCode' }, ]` 
-
+setTimeOut| Boolean | false | enable setTimeOut not needed for validation call - non validation may be needed
+timeOutPeriod|Number| 300|Time out in  milliseconds default should be sufficient  
 #### All Available Props for vue-autocompletion-valid (above + below)
 Prop | Type | Default | Description
 --- | --- | --- | ---
@@ -91,6 +92,8 @@ Event | Description
 ##### [Example 6: `v-model` directive not defined `@search-value` `@search-key` used instead](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-6.md)
 
 ##### [Example 7: Multiple dynamic select box with add remove function : Demo of method-used](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-7.md)
+
+##### [Example 8: additionalProperties and auto complete one to auto complete another](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-8.md)
 
 #### [Changelog](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/change-log.md)
 

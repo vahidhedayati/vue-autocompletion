@@ -30,9 +30,10 @@
     name: 'vue-autocompletion',
     props:VueAutocompletionLogic.loadProps(),
     computed:VueAutocompletionLogic.loadComputed(),
-    methods:VueAutocompletionLogic.loadMethods(),
+    methods:VueAutocompletionLogic.loadMethods(this.setTimeOut?true:false),
     watch: VueAutocompletionLogic.loadWatch(),
     updated(){ return VueAutocompletionLogic.updated(this)},
+    mounted() {return VueAutocompletionLogic.mounted(this)},
     destroyed: function() {
       document.removeEventListener('click', this.handleClickOutside)
     },
