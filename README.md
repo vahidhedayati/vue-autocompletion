@@ -77,9 +77,13 @@ Event | Description
 
 ##### [Working Demo project (needs to be downloaded run)](https://github.com/vahidhedayati/vue-autocompletion-test)
 
-##### [YouTube demo video 1 covers vue-field-select & vue-auto-completion](https://www.youtube.com/watch?v=8gjKhyUlEro)
-##### [YouTube Part 2: Covering additionalProperties, multiple auto completes relating to one another ](https://www.youtube.com/watch?v=9EE3PDcPnEA)
+----
 
+#### [YouTube demo video 1 covers vue-field-select & vue-auto-completion](https://www.youtube.com/watch?v=8gjKhyUlEro&list=PLfZr1vB6p8XKqh3YLgauaqsad-pV6Qsxw)
+
+#### [YouTube Part 2: Covering additionalProperties, multiple auto completes relating to one another ](https://www.youtube.com/watch?v=9EE3PDcPnEA&list=PLfZr1vB6p8XKqh3YLgauaqsad-pV6Qsxw&index=2)
+
+----
 
 ##### [Example 1: Basic](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-1.md) 
 
