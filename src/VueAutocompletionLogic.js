@@ -374,8 +374,6 @@ export default {
             thiss.search=thiss.selected[thiss.valueField]
             thiss.hiddenId=thiss.selected[thiss.keyField]
             thiss.lastSearch= thiss.search;
-        } else {
-            thiss.emitBlankDefaults(true)
         }
     },
     updated:function(thiss) {
