@@ -1,4 +1,10 @@
 ## Changelog
+#### v.1.1.10
+- Tidy up of stuff so far stuff added in 1.1.9 not needed, fix or documentation on how to use multiple selection works - 
+#### v.1.1.9
+-  working but multiple auto complete isn't clearing 2nd etc.
+#### v.1.1.8
+- Has issues not to be used - will not auto complete
 #### v.1.1.7
 - clear function in input search emit or overwrite v-model now only to run if:
   overrideClearFunction is set to true default fallse

@@ -151,7 +151,7 @@ export default {
         }
         return p
     },
-    loadMethods(validationMode) {
+    loadMethods(enableTimeOut) {
         var p = {
             onChange:function() {
                 this.searchChanged=true
@@ -272,18 +272,18 @@ export default {
                 }
             },
             confirmBlur:function(evt) {
-                if (validationMode) {
+                if (enableTimeOut) {
                     setTimeout(function () {
                         //race condition - need to ensure user selected auto complete
                         //only with vue-validation involved -
                         this.emitBlankDefaults(this.found!=this.search && this.searchChanged)
                     }.bind(this), this.timeOutPeriod)
                 } else {
-                    this.emitBlankDefaults(this.found!=this.search )
+                    this.emitBlankDefaults(this.found!=this.search && this.searchChanged)
                 }
             },
             confirmValue:function(evt) {
-                if (validationMode) {
+                if (enableTimeOut) {
                     setTimeout(function () {
                         // race condition - need to ensure user selected auto complete
                         // appears to work and is triggered when open auto complete closes so as expected
@@ -314,6 +314,7 @@ export default {
                     if (this.processSearch && (this.found.length===0||this.found.length>0 && this.search != this.result )) {
                         this.search=''
                         this.found=''
+                        this.emitBlankDefaults(true)
                     }
                 }
             },
@@ -377,7 +378,6 @@ export default {
         }
     },
     updated:function(thiss) {
-        this.mounted(thiss)
         if (thiss.overrideClearFunction) {
             var randomId = thiss.randomId;
             var main = thiss;
@@ -404,7 +404,7 @@ export default {
                                 selected[element.valueField] =''
                             }
                         }
-                    })
+                    });
                     main.$emit('input', selected)
                 }
             });
@@ -416,11 +416,16 @@ export default {
     loadWatch() {
         return {
             selected: function (val, oldValue) {
-                if (val[this.valueField] != oldValue[this.valueField]) {
+               if (val && val[this.valueField] != oldValue && oldValue[this.valueField]) {
                     this.search = val[this.valueField]
                     this.hiddenId = val[this.keyField]
                     this.lastSearch = this.search;
-                }
+                   if (!this.search)  {
+                       this.emitBlankDefaults(true)
+                   }
+                } else {
+                   this.emitBlankDefaults(true)
+               }
             },
             items: function (val, oldValue) {
                 if (val.length !== oldValue.length) {

@@ -33,10 +33,9 @@
         props:VueAutocompletionLogic.loadProps(true),
         computed:VueAutocompletionLogic.loadComputed(true),
         methods:VueAutocompletionLogic.loadMethods(true),
-        watch: VueAutocompletionLogic.loadWatch(),
+        watch:VueAutocompletionLogic.loadWatch() ,
         updated(){ return VueAutocompletionLogic.updated(this)},
         mounted() {return VueAutocompletionLogic.mounted(this)},
-
         destroyed: function() {
             document.removeEventListener('click', this.handleClickOutside)
         },

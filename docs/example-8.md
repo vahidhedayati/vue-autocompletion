@@ -11,19 +11,21 @@ So therefore if objectName is given it must be hanging off the current v-model o
 When you click X every sub compontent in additionalProperties is also cleared
 ```
 
-<vue-autocompletion-valid v-model="currentEdit5"
+<vue-autocompletion-valid  v-model="currentEdit5"
     @key-press="updateAutoCompleteItems"
     name="vehicleName"
     validation='required|max:50'
     :validationErrors="validationErrors"
+     @search-key="componentKey++"
     placeholder="aaa"
     :overrideClearFunction="true"
     :selected="currentEdit5"
     key-field="id" value-field="vehicleName" remote-value="name"
     :additionalProperties="[{keyField:'chassis', remoteKey:'chassisNumber'},
   {objectName:'country', keyField:'id', remoteKey:'countryId', valueField:'name', remoteValue:'countryName'},
-   {keyField:'colour'}]"
+   {keyField:'colour'}, {keyField:'steering'}]"
     :items="vehicles3" />
+
 
 Current Vehicle currentEdit5 is {{currentEdit5}}
 <br><br>
@@ -36,7 +38,9 @@ So therefore if objectName is given it must be hanging off the current v-model o
 
 When you click X every sub compontent in additionalProperties is also cleared
 ```
-<vue-autocompletion-valid v-model="currentEdit5.country"
+<vue-autocompletion-valid
+    :key="componentKey" 
+    v-model="currentEdit5.country"
     @key-press="updateAutoCompleteItems"
     name="name"
     validation='required|max:50'
@@ -79,6 +83,7 @@ export default {
     
     data: function () {
         return {
+            componentKey:0,
             myRemoteObjectsList:[],
             vehicles3:[ {id:'a',name:'vehicle 01', colour:'red', chassisNumber:'x1', steering:'Power', countryId:'1', countryName:'France'},
                {id:'a0', name:'zyz vehicle 01',colour:'blue', chassisNumber:'x2', steering:'Manual', countryId:'2', countryName:'Italy'},
