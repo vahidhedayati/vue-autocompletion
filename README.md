@@ -77,7 +77,9 @@ Event | Description
 
 ##### [Working Demo project (needs to be downloaded run)](https://github.com/vahidhedayati/vue-autocompletion-test)
 
-#### [YouTube demo video](https://www.youtube.com/watch?v=8gjKhyUlEro)
+##### [YouTube demo video 1 covers vue-field-select & vue-auto-completion](https://www.youtube.com/watch?v=8gjKhyUlEro)
+##### [YouTube Part 2: Covering additionalProperties, multiple auto completes relating to one another ](https://www.youtube.com/watch?v=9EE3PDcPnEA)
+
 
 ##### [Example 1: Basic](https://github.com/vahidhedayati/vue-autocompletion/tree/master/docs/example-1.md) 
 
@@ -104,7 +106,8 @@ This code originated from above posting, I tried to find the github source for t
 I had a look at some of the existing auto complete plugins and at the time building from scratch felt most suited to 
 dynamics of it's requirements.
 Original version by Filipa did most but I needed additional logic to make it work even more dynamically extensively.
-One of the main issues I found when testing existing auto completes was when an invalid entry is entered the entry 
-persists on input area and there are 2 specific setTimeouts within the js file to try capture real outcome after a 
-race condition.
+There is a new prop called `setTimeOut` which can be set `true or false`, by default validation call is true, for non validation call,
+timeout is not needed but has been left as a feature if an issue is hit whilst clearing or picking options.
+This relates to vee-validation which has it's own delay method, timeout used instead 
+this is really to try capture real outcome after a race condition.
  
