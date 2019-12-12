@@ -3,6 +3,12 @@
 [![npm](https://img.shields.io/npm/dm/vue-autocompletion.svg?style=flat-square)](https://www.npmjs.com/package/vue-autocompletion)
 [![MIT](https://img.shields.io/github/license/vahidhedayati/vue-autocompletion.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
+### Side note - similar / related projects
+- [vue-autocompletion (this)](https://github.com/vahidhedayati/vue-autocompletion)
+
+- [vue-field-select](https://github.com/vahidhedayati/vue-field-select)
+
+
 ## Installation via NPM
 
 ## First
